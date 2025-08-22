@@ -12,6 +12,8 @@ This project implements various Machine Learning (ML) models and a logistic regr
 
 - results/: generated figures and tables created by notebooks/scripts
   - Not all figures/tables are featured in the correspoding manuscript
+ 
+- models/: trained models available for use
 
 ## Installation
 
