@@ -53,4 +53,9 @@ conda activate orn_env
 - Paths in notebooks assume local folder layout
 3. Run notebooks
   - Notebooks are numbered by stage, but assuming necessary data is available, can be run on their own
+ 
+## License: MIT
+- Code licensed under MIT
+- No data are included
+
 
