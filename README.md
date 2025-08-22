@@ -49,6 +49,7 @@ pip something
 ```
 conda activate orn_env
 ```
+- Note: Due to OS/architecture differences and solver choices, minor numerical deviations from the manuscript may occur
 2. Adjust file paths
 - Paths in notebooks assume local folder layout
 3. Run notebooks
