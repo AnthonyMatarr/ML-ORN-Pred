@@ -1,6 +1,6 @@
 ## Data
-data/
-!data/.gitkeep
+data/processed/
+data/raw/
 
 #DS Store (MacOS files)
 **/.DS_Store
@@ -9,4 +9,5 @@ data/
 src/__pycache__/
 
 ##Results
-results/
+results/figures
+results/tables
