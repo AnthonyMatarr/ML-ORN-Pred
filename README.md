@@ -39,22 +39,17 @@ cd ML-ORN-Pred
 ```
 conda env create -f environment.yml
 ```
-4. (Optional) If you encounter issues with pip-installed packages, install them manually:
-```
-pip something
-```
 
 ## Usage
 1. Activate the environment:
 ```
 conda activate orn_env
 ```
-- Note: Due to OS/architecture differences and solver choices, minor numerical deviations from the manuscript may occur
 2. Adjust file paths
 - Paths in notebooks assume local folder layout
 3. Run notebooks
   - Notebooks are numbered by stage, but assuming necessary data is available, can be run on their own
- 
+  - **NOTE**: Due to OS/architecture differences and solver choices, minor numerical deviations from the manuscript may occur
 ## License: MIT
 - Code licensed under MIT
 - No data are included
