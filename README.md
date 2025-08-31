@@ -1,4 +1,4 @@
-# Machine Learning vs. LR-based Nomogram for ORN Prediction After Fibula Flap Reconstruction in Primary Oral Cancer Patients
+# Artificial Intelligence Outperforms a Nomogram for Osteoradionecrosis Prognostication Following Fibula Free Flap Reconstruction in Oral Cancer Patients
 
 ## Description
 This project implements various Machine Learning (ML) models and a logistic regression-based nomogram to predict post-operative occurance of osteoradionecrosis (ORN) in head and neck cancer patients receiving fibula flap reconstruction after tumor excision and segmental mandibulectomy.
