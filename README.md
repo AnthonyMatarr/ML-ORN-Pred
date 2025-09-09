@@ -29,7 +29,7 @@ git clone https://github.com/AnthonyMatarr/ML-ORN-Pred.git
 ```
 - Using SSH:
 ```
-git git@github.com:AnthonyMatarr/ML-ORN-Pred.git
+git clone git@github.com:AnthonyMatarr/ML-ORN-Pred.git
 ```
 2. Navigate to project directory
 ```
