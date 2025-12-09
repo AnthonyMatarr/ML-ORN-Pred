@@ -1,0 +1,19 @@
+{
+    "best_score": 0.7894,
+    "best_params": {
+        "learning_rate": 0.008772721995573163,
+        "n_estimators": 784,
+        "max_depth": 4,
+        "num_leaves": 16,
+        "min_data_in_leaf": 40,
+        "min_gain_to_split": 1.566170322927165,
+        "feature_fraction": 0.7761515181480558,
+        "bagging_freq": 9,
+        "scale_pos_weight": 2.7630354295550084,
+        "pos_bagging_fraction": 0.9947266873277695,
+        "neg_bagging_fraction": 0.9329626706688015,
+        "lambda_l1": 15.849377588307204,
+        "lambda_l2": 14.42191195430759,
+        "max_bin": 289
+    }
+}

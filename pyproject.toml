@@ -1,0 +1,27 @@
+[project]
+name = "ml-orn-pred"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "func-timeout>=4.3.5",
+    "ipykernel>=7.1.0",
+    "ipywidgets>=8.1.8",
+    "jupyter>=1.1.1",
+    "lightgbm>=4.6.0",
+    "matplotlib>=3.10.7",
+    "mlstatkit",
+    "numpy>=2.3.5",
+    "openpyxl>=3.1.5",
+    "optuna>=4.6.0",
+    "pandas>=2.3.3",
+    "pyarrow>=22.0.0",
+    "scikit-learn>=1.7.2",
+    "seaborn>=0.13.2",
+    "torch>=2.9.1",
+    "xgboost>=3.1.2",
+]
+
+[tool.uv.sources]
+mlstatkit = { git = "https://github.com/AnthonyMatarr/MLstatkit.git" }

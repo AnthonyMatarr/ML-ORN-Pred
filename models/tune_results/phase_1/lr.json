@@ -1,0 +1,9 @@
+{
+    "best_score": 0.7593,
+    "best_params": {
+        "C": 1.8229959737839678,
+        "penalty": "l2",
+        "solver_l2": "newton-cg",
+        "pos_weight_general": 1.0509712575862948
+    }
+}

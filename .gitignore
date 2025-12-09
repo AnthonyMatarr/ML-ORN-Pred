@@ -11,3 +11,9 @@ src/__pycache__/
 ##Results
 results/figures
 results/tables
+v1.0.0_legacy
+v2_results/
+models/phase_1_trained
+models/tune_results/phase_1/*.db
+
+logs/

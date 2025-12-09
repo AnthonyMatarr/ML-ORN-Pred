@@ -1,0 +1,10 @@
+{
+    "best_score": 0.8097,
+    "best_params": {
+        "C": 0.5447448460818077,
+        "kernel": "rbf",
+        "gamma": "scale",
+        "class_weight_mode": "custom",
+        "pos_weight": 2.7401454130205787
+    }
+}
