@@ -1,4 +1,4 @@
 from pathlib import Path
 
-SEED = 42
+SEED = 424242
 BASE_PATH = Path("your_path_here")
