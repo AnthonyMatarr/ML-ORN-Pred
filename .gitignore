@@ -1,13 +1,4 @@
 ## Data
-data/processed/
-data/raw/
-
-#DS Store (MacOS files)
-**/.DS_Store
-
-##Pycache
-src/__pycache__/
-
-##Results
-results/figures
-results/tables
+data/
+*.DS_Store*
+*__pycache__*
