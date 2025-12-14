@@ -3,6 +3,34 @@ import joblib
 import pandas as pd
 
 
+def get_feature_lists(df):
+    num_cols = []
+    nominal_cols = []
+    ordinal_cols = ["STAGE", "OSTEOTOMY"]
+    binary_cols = []
+    for col in df:
+        if col in ordinal_cols:
+            continue
+        len_entries = len(df[col].unique())
+        if len_entries > 10:
+            num_cols.append(col)
+        elif len_entries > 2:
+            nominal_cols.append(col)
+        else:  # binary
+            binary_cols.append(col)
+    ## Add 1 for target var
+    assert (
+        len(num_cols) + len(nominal_cols) + len(ordinal_cols) + len(binary_cols)
+        == df.shape[1]
+    )
+    return {
+        "Numerical": num_cols,
+        "Ordinal": ordinal_cols,
+        "Nominal": nominal_cols,
+        "Binary": binary_cols,
+    }
+
+
 def get_data(is_nomo, file_dir=BASE_PATH / "data"):
     """
     For a given outcome, get X/y train, validation, and testing data
