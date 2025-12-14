@@ -31,39 +31,23 @@ def get_feature_lists(df):
     }
 
 
-def get_data(is_nomo, file_dir=BASE_PATH / "data"):
+def get_data(is_nomo, file_dir=BASE_PATH / "data" / "processed"):
     """
     For a given outcome, get X/y train, validation, and testing data
     """
     if is_nomo:
         data_dict = {
-            "X_train": pd.read_parquet(
-                file_dir / "processed" / "nomo_train_transformed.parquet"
-            ),
-            "y_train": pd.read_excel(
-                file_dir / "raw" / "split" / "Raw_y_train.xlsx", index_col=0
-            ),
-            "X_test": pd.read_parquet(
-                file_dir / "processed" / "nomo_test_transformed.parquet"
-            ),
-            "y_test": pd.read_excel(
-                file_dir / "raw" / "split" / "Raw_y_test.xlsx", index_col=0
-            ),
+            "X_train": pd.read_parquet(file_dir / "nomo" / "X_train.parquet"),
+            "y_train": pd.read_excel(file_dir / "nomo" / "y_train.xlsx", index_col=0),
+            "X_test": pd.read_parquet(file_dir / "nomo" / "X_test.parquet"),
+            "y_test": pd.read_excel(file_dir / "nomo" / "y_test.xlsx", index_col=0),
         }
     else:
         data_dict = {
-            "X_train": pd.read_parquet(
-                file_dir / "processed" / "ml_train_transformed.parquet"
-            ),
-            "y_train": pd.read_excel(
-                file_dir / "raw" / "split" / "Raw_y_train.xlsx", index_col=0
-            ),
-            "X_test": pd.read_parquet(
-                file_dir / "processed" / "ml_test_transformed.parquet"
-            ),
-            "y_test": pd.read_excel(
-                file_dir / "raw" / "split" / "Raw_y_test.xlsx", index_col=0
-            ),
+            "X_train": pd.read_parquet(file_dir / "base" / "X_train.parquet"),
+            "y_train": pd.read_excel(file_dir / "base" / "y_train.xlsx", index_col=0),
+            "X_test": pd.read_parquet(file_dir / "base" / "X_test.parquet"),
+            "y_test": pd.read_excel(file_dir / "base" / "y_test.xlsx", index_col=0),
         }
     return data_dict
 
