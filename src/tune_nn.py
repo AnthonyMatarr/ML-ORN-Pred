@@ -20,14 +20,12 @@ N_SPLITS = 5
 ################################################################
 ##################### Train/Prelim Results #####################
 ################################################################
-def train_and_prelim_eval(outcome_name, data_dict, json_path, model_save_path=None):
+def train_and_prelim_eval(data_dict, json_path, model_save_path=None):
     """
     Train neural network with best hyperparameters and evaluate on validation set.
 
     Parameters
     ----------
-    outcome_name : str
-        Name of the outcome being predicted
     X_train_path : Path
         Path to training features
     y_train_path : Path
@@ -39,13 +37,18 @@ def train_and_prelim_eval(outcome_name, data_dict, json_path, model_save_path=No
     y_train = data_dict["y_train"].values.ravel()
     with open(json_path, "r") as f:
         json_params = json.load(f)
-    print(f"Training nn for {outcome_name}...")
+    print(f"Training nn for...")
     print(f"\t Best CV AUROC: \t{json_params["best_score"]:.3f}")
     # ==================================> Extract best param
     best_params = json_params["best_params"]
     # Extract architecture parameters
-    hidden_sizes = [best_params["hl_1"], best_params["hl_2"]]
-    dropouts = [best_params["dr_1"], best_params["dr_2"]]
+    hidden_sizes = [
+        best_params["hl_1"],
+    ]
+    dropouts = [best_params["dr_1"]]
+    if "hl_2" in best_params:
+        hidden_sizes.append(best_params["hl_2"])
+        dropouts.append(best_params["dr_2"])
     # ============================> Create/fit model
     clf = TorchNNClassifier(
         hidden_size_list=hidden_sizes,
@@ -78,13 +81,13 @@ def train_and_prelim_eval(outcome_name, data_dict, json_path, model_save_path=No
     h_params_to_save = {
         "hl_1": best_params["hl_1"],
         "dr_1": best_params["dr_1"],
-        "act_func_str": best_params["activation"],  # ✓
-        "num_epochs": best_params["epochs"],  # ✓ Match tuned param name
+        "act_func_str": best_params["activation"],
+        "num_epochs": best_params["epochs"],
         "lr": best_params["lr"],
         "weight_decay": best_params["weight_decay"],
-        "batch_size": best_params["batch_size"],  # ✓
-        "optimizer_str": best_params["optimizer"],  # ✓ Add
-        "weight_init_scheme": best_params["weight_init"],  # ✓ Add
+        "batch_size": best_params["batch_size"],
+        "optimizer_str": best_params["optimizer"],
+        "weight_init_scheme": best_params["weight_init"],
     }
     # Add third layer if present
     if "hl_2" in best_params:
@@ -168,9 +171,6 @@ def build_parser():
         description="Tune a neural network with optuna",
     )
     parser.add_argument(
-        "--outcome_name", required=True, help="Name of outcome the model will predict"
-    )
-    parser.add_argument(
         "--X_path", required=True, help="String path to embedding file (X data)"
     )
     parser.add_argument(
@@ -232,7 +232,6 @@ def parse_arguments(argv=None):
 
 def main_tuner(
     *_,
-    outcome_name,
     X_path,
     y_path,
     gpu_ids_str,
@@ -252,10 +251,6 @@ def main_tuner(
 
     Parameters
     ----------
-    outcome_name : str
-        Name of the binary outcome variable to tune a model for. Used for logging
-        and naming Optuna studies.
-
     X_path : pathlib.Path
         File path to the predictor matrix used for tuning
 
@@ -333,7 +328,7 @@ def main_tuner(
         device = "cuda"
     else:
         device = "cpu"
-    logging.info(f"Starting tuning for outcome={outcome_name}")
+    logging.info(f"Starting tuning...")
     logging.info(f"CUDA_VISIBLE_DEVICES={gpu_ids_str}, device={device}")
 
     def build_nn_estimator_for_device(trial):
@@ -346,6 +341,7 @@ def main_tuner(
         nn_clf.seed = SEED
         return nn_clf
 
+    logging.info(f"Loading data...")
     X_train, y_train = load_data(X_path, y_path)
     skf = StratifiedKFold(n_splits=N_SPLITS, shuffle=True, random_state=rand_state)
 
@@ -375,8 +371,9 @@ def main_tuner(
         logging.info(f"Trial {trial.number}: score={mean_score:.4f}")
         return mean_score
 
+    logging.info(f"Creating study...")
     # ============ Tune ================
-    study_name = f"nn_{outcome_name}_study"
+    study_name = f"nn_study"
     study = optuna.create_study(
         study_name=study_name,
         direction="maximize",
@@ -392,7 +389,6 @@ def main_tuner(
     logging.info(f"Best params: {study.best_params}")
     ## Save results
     result = {
-        "outcome": outcome_name,
         "best_score": round(study.best_value, 4),
         "best_params": study.best_params,
         "n_trials": len(study.trials),
@@ -423,7 +419,6 @@ def main(argv=None):
     log_path = Path(args.log_path)
     results_path = Path(args.results_path)
     main_tuner(
-        outcome_name=args.outcome_name,
         X_path=X_path,
         y_path=y_path,
         gpu_ids_str=args.gpu_ids_str,
