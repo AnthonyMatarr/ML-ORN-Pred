@@ -1496,6 +1496,8 @@ dependencies = [
     { name = "seaborn" },
     { name = "shap" },
     { name = "sigfig" },
+    { name = "simplenomo" },
+    { name = "statkit" },
     { name = "statsmodels" },
     { name = "torch" },
     { name = "trame" },
@@ -1524,6 +1526,8 @@ requires-dist = [
     { name = "seaborn", specifier = ">=0.13.2" },
     { name = "shap", specifier = ">=0.49.1" },
     { name = "sigfig", specifier = ">=1.3.19" },
+    { name = "simplenomo", specifier = ">=1.0.0" },
+    { name = "statkit", specifier = ">=1.1.0" },
     { name = "statsmodels", specifier = ">=0.14.6" },
     { name = "torch", specifier = ">=2.9.1" },
     { name = "trame", specifier = ">=3.12.0" },
@@ -2935,6 +2939,12 @@ wheels = [
 ]
 
 [[package]]
+name = "simplenomo"
+version = "1.0.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/48/c6/ad37a5132923e764efda102c8b5b6eda1cff6a04ad27d6c831fd2bfabf4c/simpleNomo-1.0.0.tar.gz", hash = "sha256:65a8c67f05f655e8179b9acb94b6e4f40313e7eec4a1e60481044b03890f0fff", size = 6139, upload-time = "2023-04-01T14:46:15.04Z" }
+
+[[package]]
 name = "six"
 version = "1.17.0"
 source = { registry = "https://pypi.org/simple" }
@@ -3017,6 +3027,22 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/28/e3/55dcc2cfbc3ca9c29519eb6884dd1415ecb53b0e934862d3559ddcb7e20b/stack_data-0.6.3.tar.gz", hash = "sha256:836a778de4fec4dcd1dcd89ed8abff8a221f58308462e1c4aa2a3cf30148f0b9", size = 44707, upload-time = "2023-09-30T13:58:05.479Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/f1/7b/ce1eafaf1a76852e2ec9b22edecf1daa58175c090266e9f6c64afcd81d91/stack_data-0.6.3-py3-none-any.whl", hash = "sha256:d5558e0c25a4cb0853cddad3d77da9891a08cb85dd9f9f91b9f8cd66e511e695", size = 24521, upload-time = "2023-09-30T13:58:03.53Z" },
+]
+
+[[package]]
+name = "statkit"
+version = "1.1.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "numpy" },
+    { name = "pandas" },
+    { name = "scikit-learn" },
+    { name = "scipy" },
+    { name = "statsmodels" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/47/f7/da7f7879c36f2cbe02a818f121a1f8efa401ad22dd0b3cbc21ca7cf465c0/statkit-1.1.0.tar.gz", hash = "sha256:fcfe90c94c0c5680d08a986b9af15d2fc678f6271b5f74afb1b36d63253073f0", size = 73355, upload-time = "2025-11-27T15:22:41.166Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/b3/99/d3b2511dcb7a38735f7748f4b62439a39b8d9b173cd16b17f5d2a9dbf5fa/statkit-1.1.0-py3-none-any.whl", hash = "sha256:7dc0492bebb3eb1eaba58b731964ddad49e15fc6295b61d0d3afa98a4c6849a2", size = 23638, upload-time = "2025-11-27T15:22:39.35Z" },
 ]
 
 [[package]]

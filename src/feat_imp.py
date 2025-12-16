@@ -7,6 +7,8 @@ warnings.filterwarnings("ignore", category=UserWarning)
 import shap
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.inspection import permutation_importance
 from imblearn.pipeline import Pipeline as ImbPipeline
 from sklearn.pipeline import Pipeline as SkPipeline
 
@@ -304,3 +306,57 @@ def get_shap_single_model(
         shap_combined, feat_order, model_name=model_name, result_path=result_path
     )
     print("Computation complete!")
+
+
+################################## PERMUTATION ##################################
+def plot_perm(
+    model_name, model, X, y, n_repeats=300, result_dir=None, show_output=False
+):
+    """
+    Calculate and plot permutation feature importance using box-and-whisker and horizontal bar charts.
+
+    Measures decrease in model accuracy when each feature is randomly shuffled.
+    """
+    result = permutation_importance(
+        estimator=model, X=X, y=y, n_repeats=n_repeats, random_state=SEED, n_jobs=1
+    )
+    ##### BOX AND WHISKER
+    sorted_idx = result.importances_mean.argsort()  # type: ignore
+
+    # Create boxplot
+    fig, ax = plt.subplots(figsize=(10, 12))
+    ax.boxplot(
+        result.importances[sorted_idx].T, vert=False, tick_labels=X.columns[sorted_idx]  # type: ignore
+    )
+    ax.set_title(f"Permutation Feature Importance for {model_name}")
+    ax.set_xlabel("Decrease in accuracy score")
+    ax.axvline(x=0, color="k", linestyle="--")
+    fig.tight_layout()
+    if result_dir:
+        result_path = result_dir / "whisker" / f"{model_name}.pdf"
+        if result_path.exists():
+            result_path.unlink()
+        result_path.mkdir(exist_ok=True, parents=True)
+        plt.savefig(result_path, bbox_inches="tight")
+    if show_output:
+        plt.show()
+    plt.close()
+    ##### BAR
+    forest_importances = pd.Series(
+        result.importances_mean, index=X.columns  # type: ignore
+    ).sort_values(ascending=True)
+
+    fig, ax = plt.subplots(figsize=(10, 12))
+    forest_importances.plot.barh(xerr=result.importances_std, ax=ax)  # type: ignore
+    ax.set_title(f"Permutation Feature Importance for {model_name}")
+    ax.set_xlabel("Decrease in mean accuracy")
+    fig.tight_layout()
+    if result_dir:
+        result_path = result_dir / "box" / f"{model_name}.pdf"
+        if result_path.exists():
+            result_path.unlink()
+        result_path.mkdir(exist_ok=True, parents=True)
+        plt.savefig(result_path, bbox_inches="tight")
+    if show_output:
+        plt.show()
+    plt.close()
