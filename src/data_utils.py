@@ -1,9 +1,13 @@
 from src.config import BASE_PATH
 import joblib
 import pandas as pd
+from src.nn_model import load_nn_clf
 
 
 def get_feature_lists(df):
+    """
+    Classify each col in a df as numerical, nominal, ordinal, or binary.
+    """
     num_cols = []
     nominal_cols = []
     ordinal_cols = ["STAGE", "OSTEOTOMY"]
@@ -33,7 +37,7 @@ def get_feature_lists(df):
 
 def get_data(is_nomo, file_dir=BASE_PATH / "data" / "processed"):
     """
-    For a given outcome, get X/y train, validation, and testing data
+    Get X/y train, and testing (internal validation) data
     """
     if is_nomo:
         data_dict = {
@@ -52,12 +56,20 @@ def get_data(is_nomo, file_dir=BASE_PATH / "data" / "processed"):
     return data_dict
 
 
-def get_models(model_prefix_list, file_dir=BASE_PATH / "v1.0.0_legacy" / "models"):
+def get_models(model_prefix_list, file_dir=BASE_PATH / "models" / "trained"):
     """
-    For a given outcome, get all models that predict that outcome
+    Get all models from memory
     """
     model_dict = {}
+    X_shape = get_data(is_nomo=False)["X_train"].shape[1]
     for model_name in model_prefix_list:
-        model = joblib.load(file_dir / f"{model_name}.joblib")
+        if model_name == "nn":
+            model = load_nn_clf(
+                data_path=file_dir / "nn.pt",
+                in_dim=X_shape,
+                device="cpu",
+            )
+        else:
+            model = joblib.load(file_dir / f"{model_name}.joblib")
         model_dict[model_name] = model
     return model_dict
