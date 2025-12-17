@@ -310,15 +310,28 @@ def get_shap_single_model(
 
 ################################## PERMUTATION ##################################
 def plot_perm(
-    model_name, model, X, y, n_repeats=300, result_dir=None, show_output=False
+    model_name,
+    model,
+    X,
+    y,
+    n_repeats=300,
+    result_dir=None,
+    show_output=False,
+    scoring="roc_auc",
 ):
     """
     Calculate and plot permutation feature importance using box-and-whisker and horizontal bar charts.
 
-    Measures decrease in model accuracy when each feature is randomly shuffled.
+    Measures decrease in model scoring (auroc by default) when each feature is randomly shuffled.
     """
     result = permutation_importance(
-        estimator=model, X=X, y=y, n_repeats=n_repeats, random_state=SEED, n_jobs=1
+        estimator=model,
+        X=X,
+        y=y,
+        n_repeats=n_repeats,
+        random_state=SEED,
+        n_jobs=1,
+        scoring=scoring,
     )
     ##### BOX AND WHISKER
     sorted_idx = result.importances_mean.argsort()  # type: ignore
@@ -328,7 +341,9 @@ def plot_perm(
     ax.boxplot(
         result.importances[sorted_idx].T, vert=False, tick_labels=X.columns[sorted_idx]  # type: ignore
     )
-    ax.set_title(f"Permutation Feature Importance for {model_name}")
+    ax.set_title(
+        f"Permutation Feature Importance for {model_name} ({n_repeats} iterations)"
+    )
     ax.set_xlabel("Decrease in accuracy score")
     ax.axvline(x=0, color="k", linestyle="--")
     fig.tight_layout()
@@ -336,7 +351,7 @@ def plot_perm(
         result_path = result_dir / "whisker" / f"{model_name}.pdf"
         if result_path.exists():
             result_path.unlink()
-        result_path.mkdir(exist_ok=True, parents=True)
+        result_path.parent.mkdir(exist_ok=True, parents=True)
         plt.savefig(result_path, bbox_inches="tight")
     if show_output:
         plt.show()
@@ -348,14 +363,16 @@ def plot_perm(
 
     fig, ax = plt.subplots(figsize=(10, 12))
     forest_importances.plot.barh(xerr=result.importances_std, ax=ax)  # type: ignore
-    ax.set_title(f"Permutation Feature Importance for {model_name}")
-    ax.set_xlabel("Decrease in mean accuracy")
+    ax.set_title(
+        f"Permutation Feature Importance for {model_name} ({n_repeats} iterations)"
+    )
+    ax.set_xlabel("Decrease in mean AUROC")
     fig.tight_layout()
     if result_dir:
         result_path = result_dir / "box" / f"{model_name}.pdf"
         if result_path.exists():
             result_path.unlink()
-        result_path.mkdir(exist_ok=True, parents=True)
+        result_path.parent.mkdir(exist_ok=True, parents=True)
         plt.savefig(result_path, bbox_inches="tight")
     if show_output:
         plt.show()
