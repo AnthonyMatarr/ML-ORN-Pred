@@ -3,6 +3,8 @@
 ## Description
 This project implements various Machine Learning (ML) models and a logistic regression-based nomogram to predict post-operative occurance of osteoradionecrosis (ORN) in head and neck cancer patients receiving fibula flap reconstruction after tumor excision and segmental mandibulectomy.
 
+Note that the models developed here are re-derived with more rigorous development methods via more advanced tuning, over-sampling, and hyper-parameter optimization methods. These updates can be found at https://github.com/AnthonyMatarr/ML-ORN-Pred-update.
+
 ## Project layout
 - notebooks/: end-to-end machine learning workflows (data cleaning, EDA, preprocessing, tuning, evaluation, and figure/table generation)
 
